@@ -1,0 +1,88 @@
+% Theme for the TWIST Group of the University of Duisburg-Essen
+% Last Modified: 2021-10-08 by Ross Knapman
+
+% Colours
+\definecolorstyle{UDEColourStyle}{
+\definecolor{UDEBlue}{HTML}{004c93}
+\definecolor{JGURed}{HTML}{c1002a}
+\definecolor{SpiceBlue}{HTML}{002f6b}
+}{
+\colorlet{TitleColour}{white}
+\colorlet{BackgroundColour}{UDEBlue!20}
+}
+
+
+% Title
+\definetitlestyle{UDETitle}{
+	width=\textwidth, titletotopverticalspace=0mm
+}{
+	\draw[color=UDEBlue, fill=UDEBlue]
+	(\titleposleft,\titlepostop) rectangle (\titleposright,\titleposbottom);
+}
+
+
+% Background
+\definebackgroundstyle{UDEBackgroundStyle}{
+	\draw[fill=BackgroundColour]
+	(bottomleft) rectangle (topright);
+}
+
+
+% Blocks
+\defineblockstyle{UDEBlock}{
+    titlewidthscale=1., bodywidthscale=1, roundedcorners=5
+}{
+    \draw[color=UDEBlue, fill=white,
+    rounded corners=\blockroundedcorners] (blockbody.south west)
+    rectangle (blockbody.north east);
+    \ifBlockHasTitle
+    \draw[color=UDEBlue, fill=UDEBlue,
+    rounded corners=\blockroundedcorners] (blocktitle.south west)
+    rectangle (blocktitle.north east);
+    \fi
+}
+
+
+
+% Theme
+\definelayouttheme{UDETheme}{
+	\usecolorstyle{UDEColourStyle}
+	\usebackgroundstyle{UDEBackgroundStyle}
+	\usetitlestyle{UDETitle}
+	\useblockstyle{UDEBlock}
+	\titlegraphic{%
+		\vspace{-10cm}
+		\includegraphics[width=0.4\linewidth]{Figures/UDE.eps}
+		\hspace{0.05\linewidth}
+		\includegraphics[width=0.4\linewidth]{Figures/TWIST.png}
+	}
+}
+
+
+% Logo
+% Unfortunately, with widths are hard-coded because my attempts to use
+% variables (e.g. \newlength, \setlength) didn't work
+% If anyone figures out how to fix this, feel free...
+\makeatletter
+\renewcommand\TP@maketitle{%
+   \centering
+   \begin{minipage}[b]{0.6\titlewidth}
+        \raggedright
+        \color{TitleColour}
+        {\bfseries \Huge \sc \@title \par}
+        \vspace*{1em}
+        {\huge \@author \par}
+        \vspace*{1em}
+        {\LARGE \@institute}
+    \end{minipage}%
+    \begin{minipage}{0.4\titlewidth}
+	\centering
+	\@titlegraphic
+    \end{minipage}
+}
+\makeatother
+
+
+\usepackage{letltxmacro}
+\usepackage{ifthen}
+
